@@ -13,13 +13,13 @@ export const getNumberIntervals = (intervals) => {
     }
   });
 
-  const result = {
+  const result: { overlap: number[][]; notInclude: number[][] } = {
     overlap: [],
     notInclude: [],
   };
 
-  let currentInterval = null;
-  let currentType = null; // 'overlap' 或 'notInclude'
+  let currentInterval: null | [number, number] = null;
+  let currentType: null | "overlap" | "notInclude" = null; // 'overlap' 或 'notInclude'
 
   for (let i = 0; i <= 20; i++) {
     const count = map.get(i);
@@ -34,7 +34,8 @@ export const getNumberIntervals = (intervals) => {
     } else if (count === 1) {
       //當數字為1代表不在overlap' 或 'notInclude'區間
       //若currentInterval為true，將array push到result
-      currentInterval && result[currentType].push(currentInterval);
+      if (currentInterval && currentType)
+        result[currentType].push(currentInterval);
 
       //將array變回初始狀態
       currentInterval = null;
@@ -48,7 +49,7 @@ export const getNumberIntervals = (intervals) => {
       }
     }
   }
-  if (currentInterval) result[currentType].push(currentInterval);
+  if (currentInterval && currentType) result[currentType].push(currentInterval);
 
   return result;
 };
