@@ -48,6 +48,7 @@ export const getNumberIntervals = (intervals) => {
       }
     }
   }
+  if (currentInterval) result[currentType].push(currentInterval);
 
   return result;
 };
