@@ -1,0 +1,40 @@
+.priceInput {
+  width: 200px;
+  &__title {
+    color: rgb(171, 171, 171);
+    font-size: 12px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+  &__errorMsg {
+    padding: 3px;
+    border-radius: 3px;
+    font-size: 8px;
+    background-color: #ffbaba;
+    color: #d8000c;
+  }
+  &__gratText {
+    color: rgb(171, 171, 171);
+    font-size: 12px;
+    text-align: right;
+  }
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  &__label {
+    padding: 5px;
+    background-color: rgb(204, 202, 202);
+  }
+  &__input {
+    flex: 1;
+    height: 25px;
+    border-radius: 5px;
+    border: 1px solid black;
+  }
+  &__input-empty {
+    border-color: red;
+  }
+}
