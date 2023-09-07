@@ -1,4 +1,4 @@
-export const addComma = (num): string => {
-  let res = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export const addComma = (num: string): string => {
+  let res = num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return res;
 };
