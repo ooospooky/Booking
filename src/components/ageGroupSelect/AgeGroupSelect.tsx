@@ -49,7 +49,7 @@ export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ setData, data, i
         <select
           className="form-select"
           id="inputGroupSelect01"
-          value={data[0].ageGroup[0]}
+          value={data[index].ageGroup[0]}
           onChange={(e) => handleAgeChange(e, 'start')}>
           {/* {generateOptions(0, ageGroup[1])} */}
           {generateOptions(0, data[index].ageGroup[1])}
@@ -59,7 +59,7 @@ export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ setData, data, i
           className="form-select"
           id="inputGroupSelect01"
           // value={ageGroup[1]}
-          value={data[0].ageGroup[1]}
+          value={data[index].ageGroup[1]}
           // onChange={handleEndAgeChange}
           onChange={(e) => handleAgeChange(e, 'end')}>
           {/* {generateOptions(ageGroup[0], 20)} */}
