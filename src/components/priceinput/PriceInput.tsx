@@ -65,7 +65,7 @@ export const PriceInput: React.FC<PriceInputProps> = ({ setData, data, index }) 
         />
       </div>
       {isEmpty ?
-        <p className='priceInput__errorMsg'>不可為空白</p> : null}
+        <p className='priceInput__errorMsg'>不可以為空白</p> : null}
       <p className='priceInput__gratText'>輸入0表示免費</p>
     </div>
   )
