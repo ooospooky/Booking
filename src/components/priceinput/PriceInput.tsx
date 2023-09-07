@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import './priceinput.scss';
-// import { addComma } from '../../helper/addComma.ts
-import { addComma } from '../../helper/addComma.ts'; // 添加 .ts 扩展名'
+import { addComma } from '../../helper/addComma.ts';
+import { AgeGroupData } from '../ageGroupPriceList/AgeGroupPriceList.tsx';
 
-export const PriceInput = () => {
+interface PriceInputProps {
+  setData: React.Dispatch<React.SetStateAction<AgeGroupData[]>>;
+  data: AgeGroupData[];
+  index: number;
+}
+
+export const PriceInput: React.FC<PriceInputProps> = ({ setData, data, index }) => {
   const [price, setPrice] = useState(0);
   const [isEmpty, setIsEmpty] = useState(false);
 
@@ -19,12 +25,26 @@ export const PriceInput = () => {
     //輸入非數字、小數點、逗號的值不更新price
     const pattern = /[^0-9,.]/g;
     if (!pattern.test(newValue)) {
-      setPrice(newValue);
+      // setPrice(newValue);
+      setData((prev) => {
+        const newData = [...prev]; // 建立prev副本
+        // 在 newData 上修改
+        newData[index].price = newValue;
+        // newData[index].ageGroup[1] = newEndAge;
+        return newData; // 返回修改後的data
+      })
+
       setIsEmpty(false);
     }
 
     if (value === "") {
-      setPrice('');
+      setData((prev) => {
+        const newData = [...prev]; // 建立prev副本
+        // 在 newData 上修改
+        newData[index].price = '';
+        // newData[index].ageGroup[1] = newEndAge;
+        return newData; // 返回修改後的data
+      })
       setIsEmpty(true);
       console.log('empty')
     }
@@ -35,10 +55,11 @@ export const PriceInput = () => {
     <div className='priceInput'>
       <p className="priceInput__title">入住費用(每人每晚)</p>
       <div className='inputContainer'>
-        <label className='inputContainer__label'>TWD</label>
+        <span className="input-group-text inputContainer__label" id="basic-addon1">TWD</span>
         <input
-          className={`inputContainer__input ${isEmpty ? 'inputContainer__input-empty' : ''}`}
-          value={addComma(price)}
+          className={`form-control inputContainer__input ${isEmpty ? 'inputContainer__input-empty' : ''}`}
+          aria-label="Username" aria-describedby="basic-addon1"
+          value={addComma(data[index].price)}
           onChange={handleInputChange}
           placeholder='請輸入費用'
         />
