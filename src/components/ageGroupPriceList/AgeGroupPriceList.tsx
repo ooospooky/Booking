@@ -9,7 +9,11 @@ export interface AgeGroupData {
   price: string;
 }
 
-export const AgeGroupPriceList = () => {
+interface AgeGroupPriceListProps {
+  onChange: (data: AgeGroupData[]) => void;
+}
+
+export const AgeGroupPriceList: React.FC<AgeGroupPriceListProps> = ({ onChange }) => {
   const [data, setData] = useState<AgeGroupData[]>([{ ageGroup: [0, 20], price: '0' }])
 
   const [isOverLap, setIsOverLap] = useState(false);
@@ -17,11 +21,11 @@ export const AgeGroupPriceList = () => {
 
   //when data change check if allAgeGroup overlap
   //if overlap's array > 0 mean is overlap, set overlap to ture, else false
+
   useEffect(() => {
-    console.log('result:', data)
+    onChange(data)
     const allAgeGroups = data.map(item => item.ageGroup);
     const result = getNumberIntervals(allAgeGroups);
-    console.log('get', result);
     result.overlap.length > 0 ? setIsOverLap(true) : setIsOverLap(false);
     result.notInclude.length > 0 ? setNotInclude(false) : setNotInclude(true);
   }, [data])
