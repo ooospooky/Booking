@@ -20,23 +20,25 @@ export const AgeGroupPriceList: React.FC<AgeGroupPriceListProps> = ({ onChange }
   const [notInclude, setNotInclude] = useState(false);
 
   //when data change check if allAgeGroup overlap
-  //if overlap's array > 0 mean is overlap, set overlap to ture, else false
-
+  // 如果重疊的陣列長度大於0，表示有重疊，將isOverLap設為true，否則設為false
   useEffect(() => {
     onChange(data)
     const allAgeGroups = data.map(item => item.ageGroup);
     const result = getNumberIntervals(allAgeGroups);
-    result.overlap.length > 0 ? setIsOverLap(true) : setIsOverLap(false);
-    result.notInclude.length > 0 ? setNotInclude(false) : setNotInclude(true);
+
+    setIsOverLap(result.overlap.length > 0);
+    setNotInclude(result.notInclude.length < 0)
   }, [data, onChange])
 
+  //處理新增價格設定
   const handleAddCard = () => {
-    setData((prev) => {
-      const newData = [...prev];
-      newData.push({ ageGroup: [0, 20], price: '0' });
-      return newData
-    })
+    setData((prevData) => [
+      ...prevData,
+      { ageGroup: [0, 20], price: '0' },
+    ]);
   }
+
+  //移除指定index的卡片
   const handleCardRemove = (index: number) => {
     setData((prev) => {
       const newData = [...prev];
@@ -51,11 +53,15 @@ export const AgeGroupPriceList: React.FC<AgeGroupPriceListProps> = ({ onChange }
         return (
           <div key={index} className="ageGroupPriceList__container">
             <div className="ageGroupPriceList__titleDiv">
-              <h1 className="ageGroupPriceList__titleDiv--title">價格設定 - {index + 1}</h1>
+              <h1 className="ageGroupPriceList__titleDiv--title">
+                價格設定 - {index + 1}
+              </h1>
               {index !== 0 &&
                 <button
                   onClick={() => handleCardRemove(index)}
-                  className="ageGroupPriceList__titleDiv--remove">X 移除</button>
+                  className="ageGroupPriceList__titleDiv--remove">
+                  X 移除
+                </button>
               }
             </div>
             <div className="ageGroupPriceList__card">
@@ -76,7 +82,9 @@ export const AgeGroupPriceList: React.FC<AgeGroupPriceListProps> = ({ onChange }
       <button
         disabled={notInclude}
         className={`ageGroupPriceList__addCard ${notInclude && 'ageGroupPriceList__addCard--disable'}`}
-        onClick={handleAddCard}>+ 新增價格設定</button>
+        onClick={handleAddCard}>
+        + 新增價格設定
+      </button>
     </div>
 
   )
