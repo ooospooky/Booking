@@ -1,4 +1,4 @@
-export const getNumberIntervals = (intervals) => {
+export const getNumberIntervals = (intervals: number[][]) => {
   const map = new Map();
   // 使map變成{0: 0, 1: 0, 2:0 ... 20:0}：
   for (let i = 0; i <= 20; i++) {
