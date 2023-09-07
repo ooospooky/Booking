@@ -27,7 +27,7 @@ export const AgeGroupPriceList: React.FC<AgeGroupPriceListProps> = ({ onChange }
     const result = getNumberIntervals(allAgeGroups);
 
     setIsOverLap(result.overlap.length > 0);
-    setNotInclude(result.notInclude.length < 0)
+    setNotInclude(result.notInclude.length === 0)
   }, [data, onChange])
 
   //處理新增價格設定
