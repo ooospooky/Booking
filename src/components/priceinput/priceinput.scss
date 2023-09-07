@@ -1,12 +1,15 @@
 .priceInput {
-  width: 200px;
+  width: 50%;
   &__title {
+    margin: 0;
     color: rgb(171, 171, 171);
     font-size: 12px;
     padding-top: 2px;
     padding-bottom: 2px;
   }
   &__errorMsg {
+    margin: 0;
+    margin-top: 1px;
     padding: 3px;
     border-radius: 3px;
     font-size: 8px;
@@ -25,16 +28,10 @@
   flex-direction: row;
   align-items: center;
   &__label {
-    padding: 5px;
-    background-color: rgb(204, 202, 202);
+    border-radius: none;
   }
-  &__input {
-    flex: 1;
-    height: 25px;
-    border-radius: 5px;
-    border: 1px solid black;
-  }
+
   &__input-empty {
-    border-color: red;
+    border-color: red !important;
   }
 }
