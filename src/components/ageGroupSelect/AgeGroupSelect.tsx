@@ -5,10 +5,11 @@ interface AgeGroupSelectProps {
   setData: React.Dispatch<React.SetStateAction<AgeGroupData[]>>;
   data: AgeGroupData[];
   index: number;
+  isOverLap: boolean;
 }
 
 
-export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ setData, data, index }) => {
+export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ setData, data, index, isOverLap }) => {
 
   const handleAgeChange = (e: React.ChangeEvent<HTMLSelectElement>, type: string) => {
     const newAge = Number(e.target.value);
@@ -47,7 +48,7 @@ export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ setData, data, i
       <p className="ageGroupSelect__title">年齡</p>
       <div className="inputContainer">
         <select
-          className="form-select"
+          className={`form-select ${isOverLap && 'inputContainer__select--empty'}`}
           id="inputGroupSelect01"
           value={data[index].ageGroup[0]}
           onChange={(e) => handleAgeChange(e, 'start')}>
@@ -56,7 +57,7 @@ export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ setData, data, i
         </select>
         <span className="input-group-text" id="basic-addon1">~</span>
         <select
-          className="form-select"
+          className={`form-select ${isOverLap && 'inputContainer__select--empty'}`}
           id="inputGroupSelect01"
           // value={ageGroup[1]}
           value={data[index].ageGroup[1]}
@@ -66,6 +67,8 @@ export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ setData, data, i
           {generateOptions(data[index].ageGroup[0], 20)}
         </select>
       </div>
+      {isOverLap ?
+        <p className='ageGroupSelect__errorMsg'>年齡區間不可重疊</p> : null}
     </div>
   )
 }
