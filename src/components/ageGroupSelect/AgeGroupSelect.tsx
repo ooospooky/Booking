@@ -11,26 +11,20 @@ interface AgeGroupSelectProps {
 
 export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ setData, data, index, isOverLap }) => {
 
+  // 處理年齡選擇的變更
   const handleAgeChange = (e: React.ChangeEvent<HTMLSelectElement>, type: string) => {
     const newAge = Number(e.target.value);
-    // setEndAge(newEndAge);
-    // if (newEndAge < startAge) {
-    //   setStartAge(newEndAge);
-    // }
-    // setAgeGroup([ageGroup[0], newEndAge]);
+
     setData((prev) => {
       const newData = [...prev]; // 建立prev副本
       // 在 newData 上修改
-      console.log('d', newData);
       newData[index].ageGroup[type === 'start' ? 0 : 1] = newAge;
-      // newData[index].ageGroup[1] = newEndAge;
-      console.log('after', newData);
       return newData; // 返回修改後的data
     })
   };
 
 
-  //create option 0 to 20 
+  //create option 範圍，從start到end
   const generateOptions = (start: number, end: number) => {
     const options: JSX.Element[] = [];
     for (let i = start; i <= end; i++) {
@@ -49,7 +43,7 @@ export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ setData, data, i
       <div className="inputContainer">
         <select
           className={`form-select ${isOverLap && 'inputContainer__select--empty'}`}
-          id="inputGroupSelect01"
+          id={`select-start-${index}`}
           value={data[index].ageGroup[0]}
           onChange={(e) => handleAgeChange(e, 'start')}>
           {/* {generateOptions(0, ageGroup[1])} */}
@@ -58,17 +52,14 @@ export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ setData, data, i
         <span className="input-group-text" id="basic-addon1">~</span>
         <select
           className={`form-select ${isOverLap && 'inputContainer__select--empty'}`}
-          id="inputGroupSelect01"
-          // value={ageGroup[1]}
+          id={`select-end-${index}`}
           value={data[index].ageGroup[1]}
-          // onChange={handleEndAgeChange}
           onChange={(e) => handleAgeChange(e, 'end')}>
           {/* {generateOptions(ageGroup[0], 20)} */}
           {generateOptions(data[index].ageGroup[0], 20)}
         </select>
       </div>
-      {isOverLap ?
-        <p className='ageGroupSelect__errorMsg'>年齡區間不可重疊</p> : null}
+      {isOverLap && <p className='ageGroupSelect__errorMsg'>年齡區間不可重疊</p>}
     </div>
   )
 }
