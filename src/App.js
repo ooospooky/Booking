@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import { PriceInput } from "./components/priceinput/PriceInput.tsx";
+import { AgeGroupPriceList } from "./components/ageGroupPriceList/AgeGroupPriceList.tsx";
 
 function App() {
   return (
     <div className="">
       ASIA YO
-      {/* <PriceInput /> */}
+      <AgeGroupPriceList />
     </div>
   );
 }
