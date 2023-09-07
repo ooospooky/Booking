@@ -10,26 +10,23 @@ interface PriceInputProps {
 }
 
 export const PriceInput: React.FC<PriceInputProps> = ({ setData, data, index }) => {
+  //用於檢查price是否為空
   const [isEmpty, setIsEmpty] = useState(false);
-
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //移除千分位逗號
     const value = e.target.value.replace(/,/g, '');
 
-
     // 限制小數點後只能輸入三位
     const newValue = value.replace(/(\.\d{3}).+/, '$1');
 
     //輸入非數字、小數點、逗號的值不更新price
-    const pattern = /[^0-9,.]/g;
+    const pattern = /[^0-9,.]/g;  //pattern為０～９的數字、小數點及逗號
     if (!pattern.test(newValue)) {
-      // setPrice(newValue);
       setData((prev) => {
-        const newData = [...prev]; // 建立prev副本
         // 在 newData 上修改
+        const newData = [...prev]; // 建立prev副本
         newData[index].price = newValue;
-        // newData[index].ageGroup[1] = newEndAge;
         return newData; // 返回修改後的data
       })
 
@@ -38,17 +35,14 @@ export const PriceInput: React.FC<PriceInputProps> = ({ setData, data, index }) 
 
     if (value === "") {
       setData((prev) => {
-        const newData = [...prev]; // 建立prev副本
         // 在 newData 上修改
+        const newData = [...prev]; // 建立prev副本
         newData[index].price = '';
-        // newData[index].ageGroup[1] = newEndAge;
         return newData; // 返回修改後的data
       })
       setIsEmpty(true);
-      console.log('empty')
     }
   }
-
 
   return (
     <div className='priceInput'>
@@ -63,8 +57,7 @@ export const PriceInput: React.FC<PriceInputProps> = ({ setData, data, index }) 
           placeholder='請輸入費用'
         />
       </div>
-      {isEmpty ?
-        <p className='priceInput__errorMsg'>不可以為空白</p> : null}
+      {isEmpty && <p className='priceInput__errorMsg'>不可以為空白</p>}
       <p className='priceInput__gratText'>輸入0表示免費</p>
     </div>
   )
