@@ -10,7 +10,6 @@ interface PriceInputProps {
 }
 
 export const PriceInput: React.FC<PriceInputProps> = ({ setData, data, index }) => {
-  const [price, setPrice] = useState(0);
   const [isEmpty, setIsEmpty] = useState(false);
 
 
