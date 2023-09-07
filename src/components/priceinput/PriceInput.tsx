@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
 import './priceinput.scss';
 import { addComma } from '../../helper/addComma.ts';
-import { AgeGroupData } from '../ageGroupPriceList/AgeGroupPriceList.tsx';
+
+import { useAppDispatch, useAppSelector } from '../../redux/store.ts';
+import { priceChange } from '../../redux/features/ageGroupPriceSlice.tsx';
 
 interface PriceInputProps {
-  setData: React.Dispatch<React.SetStateAction<AgeGroupData[]>>;
-  data: AgeGroupData[];
   index: number;
 }
 
-export const PriceInput: React.FC<PriceInputProps> = ({ setData, data, index }) => {
+export const PriceInput: React.FC<PriceInputProps> = ({ index }) => {
   //用於檢查price是否為空
   const [isEmpty, setIsEmpty] = useState(false);
+
+  //調用redux ageGroupPriceSliceReducer內的data
+  const reduxData = useAppSelector((state) => state.ageGroupPriceSliceReducer.value)
+
+  //調用redux action
+  const dispatch = useAppDispatch()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //移除千分位逗號
@@ -23,23 +29,12 @@ export const PriceInput: React.FC<PriceInputProps> = ({ setData, data, index }) 
     //輸入非數字、小數點、逗號的值不更新price
     const pattern = /[^0-9,.]/g;  //pattern為０～９的數字、小數點及逗號
     if (!pattern.test(newValue)) {
-      setData((prev) => {
-        // 在 newData 上修改
-        const newData = [...prev]; // 建立prev副本
-        newData[index].price = newValue;
-        return newData; // 返回修改後的data
-      })
-
+      dispatch(priceChange({ index, newValue }));
       setIsEmpty(false);
     }
 
     if (value === "") {
-      setData((prev) => {
-        // 在 newData 上修改
-        const newData = [...prev]; // 建立prev副本
-        newData[index].price = '';
-        return newData; // 返回修改後的data
-      })
+      dispatch(priceChange({ index, newValue: "" }));
       setIsEmpty(true);
     }
   }
@@ -52,7 +47,7 @@ export const PriceInput: React.FC<PriceInputProps> = ({ setData, data, index }) 
         <input
           className={`form-control inputContainer__input ${isEmpty ? 'inputContainer__input-empty' : ''}`}
           aria-label="Username" aria-describedby="basic-addon1"
-          value={addComma(data[index].price)}
+          value={addComma(reduxData[index].price)}
           onChange={handleInputChange}
           placeholder='請輸入費用'
         />

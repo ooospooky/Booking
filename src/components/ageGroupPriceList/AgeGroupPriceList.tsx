@@ -4,6 +4,10 @@ import { AgeGroupSelect } from '../ageGroupSelect/AgeGroupSelect.tsx'
 import { PriceInput } from '../priceinput/PriceInput.tsx'
 import { getNumberIntervals } from '../../helper/getNumberIntervals.ts';
 
+import { useAppDispatch, useAppSelector } from '../../redux/store.ts';
+import { addCard, removeCard } from '../../redux/features/ageGroupPriceSlice.tsx';
+
+
 export interface AgeGroupData {
   ageGroup: [number, number];
   price: string;
@@ -14,42 +18,41 @@ interface AgeGroupPriceListProps {
 }
 
 export const AgeGroupPriceList: React.FC<AgeGroupPriceListProps> = ({ onChange }) => {
-  const [data, setData] = useState<AgeGroupData[]>([{ ageGroup: [0, 20], price: '0' }])
 
   const [isOverLap, setIsOverLap] = useState(false);
   const [notInclude, setNotInclude] = useState(false);
 
+  //調用redux ageGroupPriceSliceReducer內的data
+  const reduxData = useAppSelector((state) => state.ageGroupPriceSliceReducer.value)
+  console.log('redux', reduxData)
+
+  //調用redux action
+  const dispatch = useAppDispatch()
+
   //when data change check if allAgeGroup overlap
   // 如果重疊的陣列長度大於0，表示有重疊，將isOverLap設為true，否則設為false
   useEffect(() => {
-    onChange(data)
-    const allAgeGroups = data.map(item => item.ageGroup);
+    onChange(reduxData)
+    const allAgeGroups = reduxData.map(item => item.ageGroup);
     const result = getNumberIntervals(allAgeGroups);
 
     setIsOverLap(result.overlap.length > 0);
     setNotInclude(result.notInclude.length === 0)
-  }, [data, onChange])
+  }, [reduxData, onChange])
 
   //處理新增價格設定
   const handleAddCard = () => {
-    setData((prevData) => [
-      ...prevData,
-      { ageGroup: [0, 20], price: '0' },
-    ]);
+    dispatch(addCard())
   }
 
   //移除指定index的卡片
   const handleCardRemove = (index: number) => {
-    setData((prev) => {
-      const newData = [...prev];
-      newData.splice(index, 1)
-      return newData
-    })
+    dispatch(removeCard(index))
   }
 
   return (
     <div className="ageGroupPriceList">
-      {data.map((item, index) => {
+      {reduxData.map((item, index) => {
         return (
           <div key={index} className="ageGroupPriceList__container">
             <div className="ageGroupPriceList__titleDiv">
@@ -66,16 +69,12 @@ export const AgeGroupPriceList: React.FC<AgeGroupPriceListProps> = ({ onChange }
             </div>
             <div className="ageGroupPriceList__card">
               <AgeGroupSelect
-                setData={setData}
-                data={data}
                 index={index}
                 isOverLap={isOverLap} />
               <PriceInput
-                setData={setData}
-                data={data}
                 index={index} />
             </div>
-            {index !== data.length - 1 && <hr />}
+            {index !== reduxData.length - 1 && <hr />}
           </div>
         )
       })}
