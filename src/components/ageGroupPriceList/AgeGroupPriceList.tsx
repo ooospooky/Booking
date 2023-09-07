@@ -24,7 +24,6 @@ export const AgeGroupPriceList: React.FC<AgeGroupPriceListProps> = ({ onChange }
 
   //調用redux ageGroupPriceSliceReducer內的data
   const reduxData = useAppSelector((state) => state.ageGroupPriceSliceReducer.value)
-  console.log('redux', reduxData)
 
   //調用redux action
   const dispatch = useAppDispatch()
