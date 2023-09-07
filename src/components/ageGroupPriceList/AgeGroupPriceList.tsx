@@ -28,7 +28,7 @@ export const AgeGroupPriceList: React.FC<AgeGroupPriceListProps> = ({ onChange }
     const result = getNumberIntervals(allAgeGroups);
     result.overlap.length > 0 ? setIsOverLap(true) : setIsOverLap(false);
     result.notInclude.length > 0 ? setNotInclude(false) : setNotInclude(true);
-  }, [data])
+  }, [data, onChange])
 
   const handleAddCard = () => {
     setData((prev) => {
