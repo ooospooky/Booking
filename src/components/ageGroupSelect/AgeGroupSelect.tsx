@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './AgeGroupSelect.scss'
 import { AgeGroupData } from '../ageGroupPriceList/AgeGroupPriceList';
 interface AgeGroupSelectProps {
