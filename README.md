@@ -9,6 +9,7 @@
 - Bootstrap v5.3.1
 - Scss v1.66.1
 - Redux toolkit v1.9.5
+- Jest
 
 ## Installation
 
