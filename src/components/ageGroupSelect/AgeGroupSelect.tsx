@@ -45,6 +45,7 @@ export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ index, isOverLap
       <div className="inputContainer">
         <select
           className={`form-select ${isOverLap && 'inputContainer__select--empty'}`}
+          placeholder='ageStart'
           id={`select-start-${index}`}
           value={reduxData[index].ageGroup[0]}
           onChange={(e) => handleAgeChange(e, 'start')}>
@@ -54,6 +55,7 @@ export const AgeGroupSelect: React.FC<AgeGroupSelectProps> = ({ index, isOverLap
         <span className="input-group-text" id="basic-addon1">~</span>
         <select
           className={`form-select ${isOverLap && 'inputContainer__select--empty'}`}
+          placeholder='ageEnd'
           id={`select-end-${index}`}
           value={reduxData[index].ageGroup[1]}
           onChange={(e) => handleAgeChange(e, 'end')}>
